@@ -1,0 +1,19 @@
+{
+  "name": "node-xpath",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "libxmljs": "^0.19.5",
+    "parse5": "^5.1.0",
+    "xmldom": "^0.1.27",
+    "xmlserializer": "^0.6.1",
+    "xpath": "0.0.27"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
