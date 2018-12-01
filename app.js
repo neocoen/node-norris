@@ -13,9 +13,9 @@ var pageMax = 10;
 var jsonResults = [];
 
 function getPage(page) {
-    var data = "";
+    let data = "";
     options['host'] = `www.chucknorrisfacts.fr`;
-    options['path'] = `/facts?page=${page}`;
+    options['path'] = `/facts?p=${page}`;
     http.get(options, (res) => {
         res.on("data", function (chunk) {
             data += chunk;
@@ -23,7 +23,9 @@ function getPage(page) {
 
         res.on("end", function () {
             let nodesFactBody = getFromXpath(data, '//x:div[@class="factbody"]');
+            let wStream = fs.createWriteStream(`./test/${page}.json`);
             nodesFactBody.forEach(nodeFactBody => {
+                wStream.write(nodeFactBody.toString());
                 let nodeNote = getFromXpath(nodeFactBody.toString(), '//x:div[@class="raty"]/@data-score');
                 let nodeText = getFromXpath(nodeFactBody.toString(), '//text()');
 
@@ -34,9 +36,14 @@ function getPage(page) {
                     });
                 }
             });
+            wStream.end();
             if (p <= pageMax) {
                 p++;
-                setTimeout(() => getPage(p), 1000);
+                setTimeout(
+                    () => {
+                        getPage(p);
+                    }
+                , 1000);
             }
             else {
                 saveJson(jsonResults);
